@@ -3,6 +3,7 @@
 namespace Oooiik\Test20240706\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CustomerToManagerAssign extends Model
 {
@@ -15,4 +16,13 @@ class CustomerToManagerAssign extends Model
         "created_at",
         "comment",
     ];
+
+    public function customers(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class, "customer_id", "id");
+    }
+    public function managers(): BelongsTo
+    {
+        return $this->belongsTo(Manager::class, "manager_id", "id");
+    }
 }
