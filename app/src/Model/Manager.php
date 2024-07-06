@@ -10,6 +10,8 @@ class Manager extends Model
 {
     protected $table = "managers";
 
+    public $timestamps = false;
+
     protected $fillable = [
         "id",
         "fio",

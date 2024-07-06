@@ -9,6 +9,8 @@ class CustomerToManagerAssign extends Model
 {
     protected $table = "customer_to_manager_assign";
 
+    public $timestamps = false;
+
     protected $fillable = [
         "customer_id",
         "city_id",
