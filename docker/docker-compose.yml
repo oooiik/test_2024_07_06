@@ -1,0 +1,60 @@
+services:
+  php:
+    container_name: "${COMPOSE_PROJECT_NAME}-php"
+    image: php:8.3-fpm-laravel
+    environment:
+      USER: ${USER_ID}
+    volumes:
+      - ./php/php.ini:/usr/local/etc/php/php.ini
+      - ./php/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - "${BASE_PATH}/app:/app"
+    working_dir: /app
+    stdin_open: true
+    tty: true
+    networks:
+      default:
+        ipv4_address: "${COMPOSE_PROJECT_NETWORK}.2"
+
+  mariadb:
+    container_name: "${COMPOSE_PROJECT_NAME}-mariadb"
+    image: mariadb
+    volumes:
+      - mariadb:/var/lib/mysql
+      - ./mariadb/dump:/docker-entrypoint-initdb.d
+    environment:
+      MARIADB_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
+      MARIADB_DATABASE: ${MARIADB_DATABASE}
+      MARIADB_USER: ${MARIADB_USER}
+      MARIADB_PASSWORD: ${MARIADB_PASSWORD}
+    networks:
+      default:
+        ipv4_address: "${COMPOSE_PROJECT_NETWORK}.3"
+  #    ports:
+  #      - "${MARIADB_LOCAL_PORT}:3306"
+
+  # phpmyadmin:
+  #   container_name: "${COMPOSE_PROJECT_NAME}-phpmyadmin"
+  #   image: phpmyadmin:5.2
+  #   environment:
+  #     PMA_HOST: mysql
+  #     PMA_PORT: 3306
+  #   links:
+  #     - mysql
+  #   networks:
+  #     default:
+  #       ipv4_address: "${COMPOSE_PROJECT_NETWORK}.8"
+
+volumes:
+  mariadb:
+    driver: local
+
+networks:
+  default:
+    external: false
+    name: "${COMPOSE_PROJECT_NAME}_default"
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "${COMPOSE_PROJECT_NETWORK}.0/24"
+          gateway: "${COMPOSE_PROJECT_NETWORK}.1"
