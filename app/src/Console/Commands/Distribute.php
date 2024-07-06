@@ -36,6 +36,13 @@ class Distribute extends BaseCommand
             ->whereHas("managers", function (Builder $query) {
                 $query->where("role", "Менеджер по привлечению");
             })
+            ->whereBetween(
+                "first_order_date",
+                [
+                    Carbon::parse("2024-06-03 00:00:00")->timestamp,
+                    Carbon::now()->timestamp,
+                ]
+            )
             ->count();
 
         echo "Клиентов было доведено до 1-го заказа всеми «Менеджерами по привлечению» : " . $customersCount . PHP_EOL;
