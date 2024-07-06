@@ -1,7 +1,7 @@
 services:
   php:
     container_name: "${COMPOSE_PROJECT_NAME}-php"
-    image: php:8.3-fpm-laravel
+    image: oooiik/php:8.3-fpm-laravel
     environment:
       USER: ${USER_ID}
     volumes:
