@@ -1,0 +1,21 @@
+{
+    "name": "oooiik/test_2024_07_06",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Oooiik\\Test20240706\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "oooiik"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": "^8.3",
+        "illuminate/database": "^12.0@dev",
+        "nesbot/carbon": "^3.0@dev",
+        "illuminate/events": "^12.0@dev"
+    }
+}
